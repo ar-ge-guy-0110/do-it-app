@@ -32,6 +32,7 @@ function App() {
       return valIndex !== index
     })
     setDoits(newTaskList);
+    handleSaveData(newTaskList);
   }
 
   function handleSaveData(currTasks) {
