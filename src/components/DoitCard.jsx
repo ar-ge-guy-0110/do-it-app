@@ -1,5 +1,5 @@
 export function DoitCard(props) {
-    const {task, handleDeleteTask, taskIndex, handleCompleteTask} = props;
+    const { task, handleDeleteTask, taskIndex, handleCompleteTask, selectedTask, setSelectedTask } = props;
     return (
         <div className="card todo-item">
             <p>{task.input}</p>
@@ -13,6 +13,12 @@ export function DoitCard(props) {
                     handleDeleteTask(taskIndex);
                 }}>
                     <h6>Delete</h6>
+                </button>
+                <button onClick={() => {
+                    setSelectedTask(taskIndex);
+                    document.getElementById("edit-modal").classList.remove("finished");
+                }}>
+                    <h6>Edit</h6>
                 </button>
             </div>
         </div>

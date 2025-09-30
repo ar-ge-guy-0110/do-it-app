@@ -2,6 +2,7 @@ import { Header } from "./components/Header";
 import { Tabs } from "./components/Tabs";
 import { DoitList } from "./components/DoitList";
 import { DoitInput } from "./components/DoitInput";
+import { EditModal } from "./components/EditModal";
 
 import { useState, useEffect } from "react";
 
@@ -9,6 +10,7 @@ function App() {
   const [doits, setDoits] = useState([]);
 
   const [selectedTab, setSelectedTab] = useState("All");
+  const [selectedTask, setSelectedTask] = useState();
 
   function handleAddTask(newTask) {
     const newTaskList = [...doits, {input: newTask, complete: false}];
@@ -36,6 +38,16 @@ function App() {
     localStorage.setItem('doit-app', JSON.stringify({ doits: currTasks }));
   }
 
+  function handleEditTask(index, newInput) {
+    if (index == null) return;
+    let newTaskList = [...doits];
+    let editedTask = doits[index];
+    editedTask['input'] = newInput;
+    newTaskList[index] = editedTask;
+    setDoits(newTaskList);
+    handleSaveData(newTaskList);
+  }
+
   useEffect(() => {
     if (!localStorage || !localStorage.getItem('doit-app')) { return }
     let db = JSON.parse(localStorage.getItem('doit-app'));
@@ -46,8 +58,9 @@ function App() {
     <>
       <Header doits = { doits } />
       <Tabs selectedTab = { selectedTab } setSelectedTab = { setSelectedTab } doits = { doits } />
-      <DoitList doits = { doits } selectedTab = { selectedTab } handleDeleteTask = { handleDeleteTask } handleCompleteTask = { handleCompleteTask } />
+      <DoitList doits = { doits } selectedTab = { selectedTab } handleDeleteTask = { handleDeleteTask } handleCompleteTask = { handleCompleteTask } selectedTask = { selectedTask } setSelectedTask = { setSelectedTask } />
       <DoitInput handleAddTask = { handleAddTask } />
+      <EditModal selectedTask = { selectedTask } doits = { doits } handleEditTask = { handleEditTask } />
     </>
   )
 }

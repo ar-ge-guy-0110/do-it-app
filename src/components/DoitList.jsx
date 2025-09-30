@@ -2,7 +2,7 @@ import { DoitCard } from "./DoitCard";
 
 export function DoitList(props) {
     //destructure
-    const {doits, selectedTab} = props;
+    const {doits, selectedTab, selectedTask, setSelectedTask, } = props;
     const filterDoitsList = selectedTab === 'All' ? doits : selectedTab === 'Completed' ? doits.filter( val => val.complete) : doits.filter(val => !val.complete)
     return (
         <>
